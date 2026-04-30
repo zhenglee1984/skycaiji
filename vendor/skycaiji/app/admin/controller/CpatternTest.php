@@ -416,7 +416,7 @@ class CpatternTest extends BaseController {
         list($pageType,$pageName)=$this->eCpattern->page_source_split($pageSource);
         
         if($urlParams){
-            $urlParams=unserialize(base64_decode($urlParams));
+            $urlParams=safe_unserialize($urlParams,true);
         }
         if(!is_array($urlParams)){
             $urlParams=array();

@@ -86,7 +86,7 @@ class Collector extends BaseController {
     		}
     	}else{
     		if(!empty($collData)){
-    		    $collData['config']=unserialize($collData['config']?:'');
+    		    $collData['config']=safe_unserialize($collData['config']);
 	    		if(!is_array($collData['config'])){
 	    		    $collData['config']=array();
 	    		}
@@ -300,7 +300,7 @@ class Collector extends BaseController {
         if(empty($collData)){
             $this->error(lang('coll_error_empty_coll'));
         }
-        $config=unserialize($collData['config']?:'');
+        $config=safe_unserialize($collData['config']);
         if(empty($config)){
             $this->error('规则不存在');
         }

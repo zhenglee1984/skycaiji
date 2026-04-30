@@ -10,7 +10,7 @@
  */
 
 
-define('SKYCAIJI_VERSION', '3.0');
+define('SKYCAIJI_VERSION', '3.0.1');
 \think\Loader::addNamespace('plugin',SKYCAIJI_PATH.'plugin');
 \think\Loader::addNamespace('util',APP_PATH.'extend/util');
 
@@ -473,4 +473,20 @@ function get_html($url,$headers=array(),$options=array(),$fromEncode='auto',$pos
     }else{
         return $html;
     }
+}
+
+function safe_unserialize($code,$base64Decode=false){
+    $code=$code?:'';
+    if($code){
+        $code=trim($code);
+        if($base64Decode){
+            $code=base64_decode($code);
+        }
+        if(preg_match('/\bO\:\d+\:[\'\"][^\'\"]+?[\'\"]/',$code)){
+            
+            throw new \Exception('错误的文件');
+        }
+        $code=unserialize($code);
+    }
+    return $code;
 }

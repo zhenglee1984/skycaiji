@@ -64,7 +64,7 @@ class CacheModel{
 		if(!empty($cache)){
 		    switch($cache['ctype']){
 		        case 1:$cache['data']=intval($cache['data']);break;
-		        case 2:$cache['data']=unserialize($cache['data']?:'');break;
+		        case 2:$cache['data']=safe_unserialize($cache['data']);break;
 		    }
 		}else{
 		    $cache=array();

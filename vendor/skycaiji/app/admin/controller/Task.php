@@ -391,7 +391,7 @@ class Task extends CollectController {
                 $collData=model('Collector')->where(array('task_id'=>$taskData['id']))->find();
                 if(!empty($collData)){
                     
-                    $collConfig=unserialize($collData['config']?:'');
+                    $collConfig=safe_unserialize($collData['config']);
                     if(is_array($collConfig)){
                         if(is_array($collConfig['variables'])){
                             foreach($collConfig['variables'] as $v){
@@ -685,7 +685,7 @@ class Task extends CollectController {
     		    $ruleData=$mcoll->getById($ruleVal);
     		}elseif('file'==$ruleType){
     		    
-    		    $ruleData=unserialize(base64_decode($ruleVal));
+    		    $ruleData=safe_unserialize($ruleVal,true);
     		    init_array($ruleData);
     		}
     		if(!empty($ruleData)){

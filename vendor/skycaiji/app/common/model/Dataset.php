@@ -20,7 +20,7 @@ class Dataset extends BaseModel{
     public function get_ds_data($dsData){
         $dsData=$dsData?$dsData->toArray():array();
         if($dsData){
-            $dsData['config']=unserialize($dsData['config']);
+            $dsData['config']=safe_unserialize($dsData['config']);
             init_array($dsData['config']);
         }
         return $dsData;

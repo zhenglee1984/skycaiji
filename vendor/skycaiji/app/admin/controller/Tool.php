@@ -473,7 +473,7 @@ class Tool extends BaseController {
 		set_time_limit(0);
 		if(request()->isPost()){
 			$check_file=file_get_contents(config('app_path').'/install/data/check_file');
-			$check_file=unserialize($check_file?:'');
+			$check_file=safe_unserialize($check_file);
 			if(empty($check_file)){
 				$this->error('没有获取到校验文件');
 			}
@@ -572,7 +572,7 @@ class Tool extends BaseController {
 			if(empty($check_db)){
 				$this->error('没有获取到校验文件');
 			}
-			$check_db=unserialize($check_db?:'');
+			$check_db=safe_unserialize($check_db);
 			if(empty($check_db)){
 				$this->error('没有获取到表');
 			}

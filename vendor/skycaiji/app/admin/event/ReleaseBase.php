@@ -831,7 +831,7 @@ class ReleaseBase extends CollectBase{
 			$collData=$mcoll->where(array('task_id'=>$taskId,'module'=>$taskModule))->find();
 			if(!empty($collData)){
 				$collData=$collData->toArray();
-				$collData['config']=unserialize($collData['config']?:'');
+				$collData['config']=safe_unserialize($collData['config']);
 				$collFields=array();
 				if(is_array($collData['config']['field_list'])){
 					foreach ($collData['config']['field_list'] as $collField){

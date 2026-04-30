@@ -15,7 +15,7 @@ class Release extends \skycaiji\common\model\BaseModel{
     
     public function compatible_config($config){
         if(!is_array($config)){
-            $config=unserialize($config?:'');
+            $config=safe_unserialize($config);
         }
         init_array($config);
         foreach (config('release_modules') as $v){

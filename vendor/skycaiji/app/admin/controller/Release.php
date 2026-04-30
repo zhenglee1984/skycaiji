@@ -47,7 +47,7 @@ class Release extends CollectController{
 			        $newData['config']=$importRele['config'];
 			    }elseif($releImportType=='file'){
 			        
-			        $releImporVal=unserialize(base64_decode($releImporVal));
+			        $releImporVal=safe_unserialize($releImporVal,true);
 			        init_array($releImporVal);
 			        $newData['module']=$releImporVal['module'];
 			        $newData['config']=$releImporVal['config'];
@@ -153,7 +153,7 @@ class Release extends CollectController{
 	    if(empty($releData)){
 	        $this->error('发布设置不存在');
 	    }
-	    $config=unserialize($releData['config']?:'');
+	    $config=safe_unserialize($releData['config']);
 	    if(empty($config)){
 	        $this->error('发布设置不存在');
 	    }
@@ -373,7 +373,7 @@ class Release extends CollectController{
 		if(empty($releData)){
 			$this->error(lang('rele_error_empty_rele'));
 		}
-		$config=unserialize($releData['config']?:'');
+		$config=safe_unserialize($releData['config']);
 		$db_config=controller('admin/Rdb','event')->get_db_config($config['db']);
 		try{
 			$mdb=new DbCommon($db_config);

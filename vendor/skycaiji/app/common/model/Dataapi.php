@@ -50,7 +50,7 @@ class Dataapi extends BaseModel{
     public function get_da_data($daData){
         $daData=$daData?$daData->toArray():array();
         if($daData){
-            $daData['config']=unserialize($daData['config']);
+            $daData['config']=safe_unserialize($daData['config']);
             init_array($daData['config']);
         }
         return $daData;

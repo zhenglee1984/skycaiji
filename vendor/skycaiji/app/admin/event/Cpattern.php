@@ -127,7 +127,7 @@ class Cpattern extends CpatternEvent{
     }
     /*初始化配置*/
     public function init($collData){
-        $collData['config']=unserialize($collData['config']?:'');
+        $collData['config']=safe_unserialize($collData['config']);
         $this->collector=$collData;
         $releData=model('Release')->where(array('task_id'=>$collData['task_id']))->find();
         if(!empty($releData)){

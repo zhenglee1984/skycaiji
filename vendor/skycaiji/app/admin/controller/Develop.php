@@ -923,7 +923,7 @@ class Develop extends BaseController {
                 foreach ($diyList as $k=>$v){
                     $diyApp='';
                     if($v){
-                        $v=unserialize($v);
+                        $v=safe_unserialize($v);
                         if(is_array($v)&&is_array($v['diy'])&&$v['diy']['type']=='app'&&$v['diy']['app']){
                             $diyApp=$v['diy']['app'];
                         }

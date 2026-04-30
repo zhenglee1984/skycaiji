@@ -884,21 +884,6 @@ class Mystore extends BaseController {
 		}
 	}
 	
-	private function _safe_unserialize($code,$base64Decode=true){
-	    if($code){
-	        $code=trim($code);
-	        if($base64Decode){
-	            $code=base64_decode($code);
-	        }
-    	    if(preg_match('/\bO\:\d+\:[\'\"][^\'\"]+?[\'\"]/',$code)){
-    	        
-    	        throw new \Exception('错误的文件');
-    	    }
-    	    $code=unserialize($code);
-	    }
-	    return $code;
-	}
-	
 	private function _upload_decrypt($pwd,&$data){
 	    if(isset($data['encrypt_version'])){
 	        if(empty($pwd)){
@@ -907,7 +892,7 @@ class Mystore extends BaseController {
 	            
 	            $edClass=new \util\EncryptDecrypt($data['encrypt_version'],$data['skycaiji_version']);
 	            $data=$edClass->decrypt(array('data'=>$data['data'],'pwd'=>$pwd));
-	            $data=$this->_safe_unserialize($data);
+	            $data=safe_unserialize($data,true);
 	            if(empty($data)){
 	                return return_result('密码错误');
 	            }
@@ -939,7 +924,7 @@ class Mystore extends BaseController {
 	        if(preg_match_all('/\/\*skycaiji-plugin-start\*\/(?P<data>[\s\S]+?)\/\*skycaiji-plugin-end\*\//i',$fileTxt,$fileMatches)){
 	            foreach ($fileMatches['data'] as $k=>$v){
 	                $v=$v?:'';
-	                $v=$this->_safe_unserialize($v);
+	                $v=safe_unserialize($v,true);
 	                if($v&&is_array($v)){
 	                    $returnResult=$this->_upload_decrypt($uploadPwd,$v);
 	                    if($returnResult){
@@ -963,12 +948,12 @@ class Mystore extends BaseController {
 	            if($type=='rule'){
 	                
     	            if(preg_match('/\/\*skycaiji-collector-start\*\/(?P<data>[\s\S]+?)\/\*skycaiji-collector-end\*\//i',$fileTxt,$fileMatch)){
-    	                $typeData=$this->_safe_unserialize($fileMatch['data']);
+    	                $typeData=safe_unserialize($fileMatch['data'],true);
     	            }
 	            }elseif($type=='release'){
 	                
 	                if(preg_match('/\/\*skycaiji-release-start\*\/(?P<data>[\s\S]+?)\/\*skycaiji-release-end\*\//i',$fileTxt,$fileMatch)){
-	                    $typeData=$this->_safe_unserialize($fileMatch['data']);
+	                    $typeData=safe_unserialize($fileMatch['data'],true);
 	                }
 	            }
 	            if($typeData&&is_array($typeData)){
@@ -981,7 +966,7 @@ class Mystore extends BaseController {
 	                return return_result('不是'.$typeName.'文件');
 	            }
 	            
-	            $typeData['config']=$this->_safe_unserialize($typeData['config'],false);
+	            $typeData['config']=safe_unserialize($typeData['config']);
 	            $typeData['config']=serialize($typeData['config']);
 	        }
 	        $uploadedPlugin=false;

@@ -16,7 +16,7 @@ class Task extends \skycaiji\common\model\BaseModel{
         if($data){
             $data=$data->toArray();
             if(!empty($data['config'])){
-                $data['config']=unserialize($data['config']);
+                $data['config']=safe_unserialize($data['config']);
             }
             if(empty($data['config'])){
                 $data['config']=array();
@@ -33,7 +33,7 @@ class Task extends \skycaiji\common\model\BaseModel{
 		}
 		if(!is_array($config)){
 			
-			$config=unserialize($config);
+		    $config=safe_unserialize($config);
 		}
 		if(!is_array($config)){
 		    $config=array();

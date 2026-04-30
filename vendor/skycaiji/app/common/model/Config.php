@@ -19,7 +19,7 @@ class Config extends BaseModel {
         if(!empty($configItem)){
             switch($configItem['ctype']){
                 case 1:$configItem['data']=intval($configItem['data']);break;
-                case 2:$configItem['data']=unserialize($configItem['data']?:'');break;
+                case 2:$configItem['data']=safe_unserialize($configItem['data']);break;
             }
         }
         return $configItem;
